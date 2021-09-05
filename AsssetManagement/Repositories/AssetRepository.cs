@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 
 using Xamarin.Forms;
@@ -17,7 +18,7 @@ namespace AsssetManagement.Repositories
 {
     public interface IAssetRepository : IRepository<Asset, string>
     {
-        new IList<Asset> GetAll();
+        new IList<Asset> GetAll(string searchText);
         new Asset Get(string assetId);
         new bool Save(Asset asset);
         new bool Update(Asset asset);
@@ -49,7 +50,17 @@ namespace AsssetManagement.Repositories
             set => _databaseConfig = value;
         }
         public AssetRepository() : base("asset")
-        { }
+        {
+            var index = IndexBuilder.FullTextIndex(FullTextIndexItem.Property("Name")
+                , FullTextIndexItem.Property("Description")
+                , FullTextIndexItem.Property("Type")
+                , FullTextIndexItem.Property("AssetTag")
+                , FullTextIndexItem.Property("Model")
+                , FullTextIndexItem.Property("Manufacturer")
+                , FullTextIndexItem.Property("Status")
+                , FullTextIndexItem.Property("Project")).IgnoreAccents(false);
+            Database.CreateIndex("assetFTSIndex", index);
+        }
         public override Asset Get(string id)
         {
             Asset asset = null;
@@ -69,8 +80,8 @@ namespace AsssetManagement.Repositories
                         Manufacturer = document.GetString("Manufacturer"),
                         Model = document.GetString("Model"),
                         Project = document.GetString("Project"),
-                        Status= (AssetStatus)Enum.Parse(typeof(AssetStatus), document.GetString("Status").ToString()),
-                        Type= (AssetType)Enum.Parse(typeof(AssetType), document.GetString("Type").ToString())
+                        Status = (AssetStatus)Enum.Parse(typeof(AssetStatus), document.GetString("Status").ToString()),
+                        Type = (AssetType)Enum.Parse(typeof(AssetType), document.GetString("Type").ToString())
                     };
                 }
             }
@@ -132,18 +143,35 @@ namespace AsssetManagement.Repositories
             return false;
         }
 
-        public override IList<Asset> GetAll()
+        public override IList<Asset> GetAll(string searchText)
         {
             var assets = new List<Asset>();
             try
             {
-                var query = QueryBuilder.Select(SelectResult.Expression(Meta.ID)).From(DataSource.Database(Database));
-                
-                foreach (var result in query.Execute())
+                if (string.IsNullOrEmpty(searchText))
                 {
-                    var documentId = result.ToDictionary().Values.FirstOrDefault().ToString();
-                    Asset asset = Get(documentId);
-                    assets.Add(asset);
+                    var fromQuery = QueryBuilder.Select(SelectResult.Expression(Meta.ID)).From(DataSource.Database(Database));
+                    foreach (var result in fromQuery.Execute())
+                    {
+                        var documentId = result.ToDictionary().Values.FirstOrDefault().ToString();
+                        Asset asset = Get(documentId);
+                        assets.Add(asset);
+                    }
+                }
+                else
+                {
+                    var whereClause = FullTextExpression.Index("assetFTSIndex").Match($"'{searchText}'");
+                    using (var whereQuery = QueryBuilder.Select(SelectResult.Expression(Meta.ID))
+                        .From(DataSource.Database(Database))
+                        .Where(whereClause))
+                    {
+                        foreach (var result in whereQuery.Execute())
+                        {
+                            var documentId = result.ToDictionary().Values.FirstOrDefault().ToString();
+                            Asset asset = Get(documentId);
+                            assets.Add(asset);
+                        }
+                    }
                 }
                 //
                 return assets;

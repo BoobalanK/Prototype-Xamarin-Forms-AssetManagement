@@ -18,7 +18,7 @@ namespace AsssetManagement.Services
         bool AddAssetItem(Asset newAsset);
         bool DeleteAssetItem(Asset removedAsset);
         Asset GetAssetItem(Guid id);
-        IList<Asset> GetAssetItems();
+        IList<Asset> GetAssetItems(string searchText);
         bool UpdateAssetItem(Asset updatedAssetItem);
     }
     public class AssetService : IAssetService
@@ -60,9 +60,9 @@ namespace AsssetManagement.Services
             return _assetRepository.Get(id.ToString());
         }
 
-        public IList<Asset> GetAssetItems()
+        public IList<Asset> GetAssetItems(string searchText)
         {
-            return _assetRepository.GetAll();
+            return _assetRepository.GetAll(searchText);
         }
 
         public bool UpdateAssetItem(Asset updatedAssetItem)

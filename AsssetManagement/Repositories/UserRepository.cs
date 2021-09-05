@@ -14,7 +14,7 @@ namespace AsssetManagement.Repositories
 {
     public interface IUserRepository : IRepository<User, string>
     {
-        new IList<User> GetAll();
+        new IList<User> GetAll(string searchText);
         new User Get(string userId);
         new bool Update(User user);
         new bool Save(User user);
@@ -124,7 +124,7 @@ namespace AsssetManagement.Repositories
             return false;
         }
 
-        public override IList<User> GetAll()
+        public override IList<User> GetAll(string searchText)
         {
             var users = new List<User>();
             try

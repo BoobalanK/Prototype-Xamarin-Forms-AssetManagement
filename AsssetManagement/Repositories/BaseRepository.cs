@@ -7,7 +7,7 @@ namespace AsssetManagement.Repositories
 {
     public interface IRepository<T, K> : IDisposable
     {
-        IList<T> GetAll();
+        IList<T> GetAll(string searchText);
         T Get(K id);
         bool Save(T obj);
         bool Update(T obj);
@@ -90,7 +90,7 @@ namespace AsssetManagement.Repositories
         public abstract T Get(K id);
         public abstract bool Save(T obj);
         public abstract bool Remove(T obj);
-        public abstract IList<T> GetAll();
+        public abstract IList<T> GetAll(string searchText);
         public abstract bool Update(T obj);
     }
 }

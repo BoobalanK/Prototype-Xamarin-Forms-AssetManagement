@@ -30,7 +30,7 @@ namespace AsssetManagement.PageModels
 
         public AssetsPageModel(IAssetService assetService)
         {
-            Assets = new ObservableCollection<Asset>((IEnumerable<Asset>)assetService.GetAssetItems());
+            Assets = new ObservableCollection<Asset>((IEnumerable<Asset>)assetService.GetAssetItems(string.Empty));
         }
     }
 }
