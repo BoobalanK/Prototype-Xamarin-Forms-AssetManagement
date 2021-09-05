@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mtrl="clr-namespace:XF.Material.Forms.Resources;assembly=XF.Material"
+             xmlns:mtrltypo="clr-namespace:XF.Material.Forms.Resources.Typography;assembly=XF.Material"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="AsssetManagement.App">
+    <Application.Resources>
+
+     
+      <OnPlatform x:Key="FontFamily.RobotoRegular"
+                  x:TypeArguments="x:String"
+                  Android="Fonts/Roboto-Regular.ttf#Roboto-Regular"
+                  iOS="Roboto-Regular" />
+      <OnPlatform x:Key="FontFamily.RobotoMedium"
+                  x:TypeArguments="x:String"
+                  Android="Fonts/Roboto-Medium.ttf#Roboto-Medium"
+                  iOS="Roboto-Medium" />
+
+      <mtrltypo:MaterialFontConfiguration x:Key="Material.Font"
+                                          Body1="{StaticResource FontFamily.RobotoRegular}"
+                                          Body2="{StaticResource FontFamily.RobotoRegular}"
+                                          Button="{StaticResource FontFamily.RobotoMedium}"
+                                          Caption="{StaticResource FontFamily.RobotoRegular}"
+                                          H1="{StaticResource FontFamily.RobotoRegular}"
+                                          H2="{StaticResource FontFamily.RobotoRegular}"
+                                          H3="{StaticResource FontFamily.RobotoRegular}"
+                                          H4="{StaticResource FontFamily.RobotoRegular}"
+                                          H5="{StaticResource FontFamily.RobotoRegular}"
+                                          H6="{StaticResource FontFamily.RobotoMedium}"
+                                          Overline="{StaticResource FontFamily.RobotoRegular}"
+                                          Subtitle1="{StaticResource FontFamily.RobotoRegular}"
+                                          Subtitle2="{StaticResource FontFamily.RobotoMedium}" />
+
+      <mtrl:MaterialColorConfiguration x:Key="Material.Color"
+                                       Background="#EAEAEA"
+                                       Error="#B00020"
+                                       OnBackground="#000000"
+                                       OnError="#FFFFFF"
+                                       OnPrimary="#5e92f3"
+                                       OnSecondary="#FFFFFF"
+                                       OnSurface="#000000"
+                                       Primary="#1565c0"
+                                       PrimaryVariant="#002171"
+                                       Secondary="#BFEDFF"
+                                       SecondaryVariant="#91c0ff"
+                                       Surface="#F5F5F5" />
+
+      <mtrl:MaterialConfiguration x:Key="Material.Style"
+                                  ColorConfiguration="{StaticResource Material.Color}"
+                                  FontConfiguration="{StaticResource Material.Font}" />
+
+      <!--<Style TargetType="ContentPage">
+         <Setter Property="BackgroundColor"
+                 Value="{StaticResource Material.Color.Surface}" />
+      </Style>-->
+       
+      <!--<Style TargetType="ListView">
+         <Setter Property="BackgroundColor"
+                 Value="{StaticResource Material.Color.Surface}" />
+      </Style>-->
+
+      <Style TargetType="material:MaterialTextField">
+         <Setter Property="BackgroundColor"
+                 Value="{StaticResource Material.Color.Secondary}" />
+         <Setter Property="PlaceholderColor"
+                 Value="{StaticResource Material.Color.SecondaryVariant}" />
+         <Setter Property="TextColor"
+                 Value="{StaticResource Material.Color.OnBackground}" />
+         <Setter Property="UnderlineColor"
+                 Value="{StaticResource Material.Color.Secondary}" />
+      </Style>
+
+      <Style TargetType="material:MaterialButton">
+         <Setter Property="BackgroundColor"
+                 Value="{StaticResource Material.Color.Primary}" />
+         <Setter Property="TextColor"
+                 Value="{StaticResource Material.Color.OnSurface}" />
+         <Setter Property="BorderColor"
+                 Value="{StaticResource Material.Color.Surface}" />
+         <Setter Property="AllCaps"
+                 Value="False" />
+         <Setter Property="HorizontalOptions"
+                 Value="FillAndExpand" />
+         <Setter Property="VerticalOptions"
+                 Value="CenterAndExpand" />
+      </Style>
+      <Style TargetType="material:MaterialCard">
+         <Setter Property="BackgroundColor"
+                 Value="{StaticResource Material.Color.OnSecondary}" />
+         <Setter Property="BorderColor"
+                 Value="{StaticResource Material.Color.Surface}" />
+      </Style>
+
+   </Application.Resources>
+</Application>

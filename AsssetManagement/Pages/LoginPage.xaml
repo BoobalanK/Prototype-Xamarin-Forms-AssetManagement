@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:models="clr-namespace:AsssetManagement.Models"
+             xmlns:pagemodels="clr-namespace:AsssetManagement.PageModels"
+             x:Class="AsssetManagement.Pages.LoginPage"
+             x:DataType="pagemodels:LoginPageModel"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+      <AbsoluteLayout>
+         <Grid AbsoluteLayout.LayoutBounds="0.5,0.5,0.75,0.75" 
+               AbsoluteLayout.LayoutFlags="All"
+               RowDefinitions="auto,auto,auto,auto" VerticalOptions="CenterAndExpand">
+            <material:MaterialIcon Grid.Row="0"
+                                   Source="assets"
+                                   Aspect="AspectFit"
+                                   HeightRequest="100"
+                                   WidthRequest="100" />
+            <material:MaterialTextField Grid.Row="1" 
+                                        ReturnType="Next"
+                                        Text="{Binding User.EmailAddress}" Placeholder="Email address"/>
+            <material:MaterialTextField Grid.Row="2"
+                                        ReturnType="Next"
+                                        Text="{Binding User.Password}"
+                                        InputType="Password"
+                                        Placeholder="Password" />
+            <material:MaterialButton Grid.Row="3"
+                                     Text="Login" Command="{Binding OnLoginCommand}" />
+         </Grid>
+      </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

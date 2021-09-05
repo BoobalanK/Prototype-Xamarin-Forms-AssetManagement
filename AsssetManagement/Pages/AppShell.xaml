@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:pages="clr-namespace:AsssetManagement.Pages"
+       xmlns:pagemodels="clr-namespace:AsssetManagement.PageModels"
+       mc:Ignorable="d"
+       BackgroundColor="{StaticResource Material.Color.Primary}"
+       ForegroundColor="White"
+       TitleColor="White"
+       x:DataType="pages:AppShell"
+       x:Class="AsssetManagement.Pages.AppShell"
+       Visual="Material">
+
+   <Shell.FlyoutHeaderTemplate>
+      <DataTemplate>
+         <Grid Padding="20">
+            <ImageButton Aspect="AspectFit"
+                         Source="assets"
+                         Clicked="FlyoutLogoClicked" />
+         </Grid>
+      </DataTemplate>
+   </Shell.FlyoutHeaderTemplate>
+
+   <Shell.FlyoutHeader>
+      <ContentView BackgroundColor="White">
+         <ContentView.Content>
+            <Grid Padding="20">
+               <ImageButton Aspect="AspectFit"
+                            Source="assets"
+                            Clicked="FlyoutLogoClicked" />
+            </Grid>
+         </ContentView.Content>
+      </ContentView>
+   </Shell.FlyoutHeader>
+
+   <Shell.MenuItemTemplate>
+      <DataTemplate>
+         <Frame>
+            <Button VerticalOptions="End"
+                    CornerRadius="30"
+                    Clicked="OnLogOutClicked"
+                    BackgroundColor="#008ece"
+                    Text="Log Out"
+                    TextColor="White" />
+         </Frame>
+      </DataTemplate>
+   </Shell.MenuItemTemplate>
+
+   <FlyoutItem Route="Login"
+               FlyoutDisplayOptions="AsSingleItem"
+               Shell.FlyoutItemIsVisible="False"
+               IsVisible="True">
+      <ShellContent  FlyoutItem.IsVisible="True"
+                     Shell.NavBarIsVisible="False"
+                     Shell.FlyoutBehavior="Disabled"
+                     ContentTemplate="{DataTemplate pages:LoginPage}" />
+   </FlyoutItem>
+
+   <FlyoutItem Route="Home"
+               FlyoutDisplayOptions="AsMultipleItems"
+               IsVisible="True">
+      <ShellContent Route="AssetsPage"
+                    Icon="assets"
+                    Title="Home"
+                    FlyoutItem.IsVisible="True"
+                    ContentTemplate="{DataTemplate pages:AssetsPage}">
+      </ShellContent>
+   </FlyoutItem>
+
+   <ShellContent Icon="assets"
+                 Title="Add Asset"
+                 ContentTemplate="{DataTemplate pages:NewAssetPage}">
+   </ShellContent>
+
+   <ShellContent Icon="assets"
+                 Title="Assign Asset"
+                 ContentTemplate="{DataTemplate pages:AssignAssetPage}">
+   </ShellContent>
+
+   <ShellContent Icon="assets"
+                 Title="Request Asset"
+                 ContentTemplate="{DataTemplate pages:RequestAssetPage}">
+   </ShellContent>
+
+   <ShellContent Icon="assets"
+                 Title="Release Asset"
+                 ContentTemplate="{DataTemplate pages:ReleaseAssetPage}">
+   </ShellContent>
+
+   <MenuItem Text="Logout"
+             Clicked="OnLogOutClicked" />
+
+
+</Shell>

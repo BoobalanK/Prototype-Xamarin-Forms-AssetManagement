@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:pagemodels="clr-namespace:AsssetManagement.PageModels"
+             xmlns:models="clr-namespace:AsssetManagement.Models"
+             x:DataType="pagemodels:AssetsPageModel"
+             x:Class="AsssetManagement.Pages.AssetsPage">
+    <ContentPage.Content>
+      <ListView ItemsSource="{Binding Assets}" SeparatorVisibility="None" HasUnevenRows="True" RowHeight="200">
+         <ListView.ItemTemplate>
+            <DataTemplate>
+               <ViewCell x:DataType="models:Asset">
+                  <material:MaterialCard Elevation="4"
+                                         IsClickable="True"
+                                         CornerRadius="2" 
+                                         Margin="5">
+                     <Grid ColumnDefinitions="*,auto">
+                        <Grid RowDefinitions="auto,auto,*"
+                              Grid.Column="0">
+                           <Label Grid.Row="0"
+                                  Text="{Binding Name}"
+                                  FontAttributes="Bold" />
+                           <Label Grid.Row="1"
+                                  Text="{Binding Type}" />
+                           <Label Grid.Row="2"
+                                  Text="{Binding Project}" />
+                        </Grid>
+                        
+                        <Grid Grid.Column="1">
+                        <BoxView CornerRadius="25"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand"
+                                 BackgroundColor="Green" WidthRequest="75" />
+                           <Label Text="{Binding Status}"
+                                  FontAttributes="Bold"
+                                  VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               TextColor="{StaticResource Material.Color.OnSecondary}" />
+                        </Grid>
+                     </Grid>
+                  </material:MaterialCard>
+               </ViewCell>
+            </DataTemplate>
+         </ListView.ItemTemplate>
+      </ListView>
+    </ContentPage.Content>
+</ContentPage>
