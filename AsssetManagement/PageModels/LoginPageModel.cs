@@ -1,4 +1,5 @@
 ﻿using AsssetManagement.Models;
+using AsssetManagement.Pages;
 using AsssetManagement.StaticClasses;
 
 using FreshMvvm;
@@ -28,18 +29,30 @@ namespace AsssetManagement.PageModels
                 }
             }
         }
+
+        private AppShellPageModel _appShellPageModel;
+
         public FreshAwaitCommand OnLoginCommand { get; }
-        public LoginPageModel()
+        public LoginPageModel(AppShellPageModel appShellPageModel)
         {
+            _appShellPageModel = appShellPageModel;
             OnLoginCommand = new FreshAwaitCommand(OnLogin);
+            //
+            User = new User();
+            //User.EmailAddress = "prasanthk@dsrc.co.in";
+            //User.Password = "Admin@123";
+            //User.Type = UserType.StoreManager;
+            //
+            User.EmailAddress = "boobalan.k@dsrc.co.in";
+            User.Password = "Dsrc@123";
+            User.Type = UserType.Employee;
         }
 
         private void OnLogin(object arg1, TaskCompletionSource<bool> arg2)
         {
-            User = new User();
-            User.EmailAddress = "boobalan.k@dsrc.co.in";
-            User.Password = "Admin@123";
             AppData.User = User;
+            (Shell.Current.BindingContext as AppShellPageModel).IsEmployee = AppData.User.Type is Models.UserType.Employee;
+            (Shell.Current.BindingContext as AppShellPageModel).IsStoreManager = AppData.User.Type is Models.UserType.StoreManager;
             Shell.Current.GoToAsync("//Home");
         }
     }

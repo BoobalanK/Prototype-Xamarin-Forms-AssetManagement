@@ -20,11 +20,12 @@ namespace AsssetManagement
             InitializeComponent();
             XF.Material.Forms.Material.Use("Material.Style");
             InitContainer();
-            MainPage = new AppShell();
+            MainPage = new AppShellPage();
         }
 
         private void InitContainer()
         {
+            FreshIOC.Container.Register<AppShellPageModel, AppShellPageModel>();
             FreshIOC.Container.Register<LoginPageModel,LoginPageModel>();
             FreshIOC.Container.Register<AssetsPageModel,AssetsPageModel>();
             //

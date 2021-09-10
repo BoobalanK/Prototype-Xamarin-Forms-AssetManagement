@@ -9,10 +9,12 @@
        BackgroundColor="{StaticResource Material.Color.Primary}"
        ForegroundColor="White"
        TitleColor="White"
-       x:DataType="pages:AppShell"
-       x:Class="AsssetManagement.Pages.AppShell"
+       x:DataType="pagemodels:AppShellPageModel"
+       x:Class="AsssetManagement.Pages.AppShellPage"
        Visual="Material">
-
+   <Shell.BindingContext>
+      <pagemodels:AppShellPageModel />
+   </Shell.BindingContext>
    <Shell.FlyoutHeaderTemplate>
       <DataTemplate>
          <Grid Padding="20">
@@ -71,22 +73,26 @@
 
    <ShellContent Icon="assets"
                  Title="Add Asset"
-                 ContentTemplate="{DataTemplate pages:NewAssetPage}">
+                 ContentTemplate="{DataTemplate pages:NewAssetPage}"
+                 IsVisible="{Binding IsStoreManager}">
    </ShellContent>
 
    <ShellContent Icon="assets"
                  Title="Assign Asset"
-                 ContentTemplate="{DataTemplate pages:AssignAssetPage}">
+                 ContentTemplate="{DataTemplate pages:AssignAssetPage}"
+                 IsVisible="{Binding IsStoreManager}">
    </ShellContent>
 
    <ShellContent Icon="assets"
                  Title="Request Asset"
-                 ContentTemplate="{DataTemplate pages:RequestAssetPage}">
+                 ContentTemplate="{DataTemplate pages:RequestAssetPage}" 
+                 IsVisible="{Binding IsEmployee}">
    </ShellContent>
 
    <ShellContent Icon="assets"
                  Title="Release Asset"
-                 ContentTemplate="{DataTemplate pages:ReleaseAssetPage}">
+                 ContentTemplate="{DataTemplate pages:ReleaseAssetPage}"
+                 IsVisible="{Binding IsEmployee}">
    </ShellContent>
 
    <MenuItem Text="Logout"

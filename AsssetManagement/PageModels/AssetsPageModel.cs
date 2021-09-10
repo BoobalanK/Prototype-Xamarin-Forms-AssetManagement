@@ -14,6 +14,7 @@ namespace AsssetManagement.PageModels
     public class AssetsPageModel: FreshBasePageModel
     {
         private ObservableCollection<Asset> _assets;
+        private AppShellPageModel _appShellPageModel;
 
         public ObservableCollection<Asset> Assets
         {
@@ -28,9 +29,22 @@ namespace AsssetManagement.PageModels
             }
         }
 
-        public AssetsPageModel(IAssetService assetService)
+        public AssetsPageModel(IAssetService assetService, AppShellPageModel appShellPageModel)
         {
+            _appShellPageModel = appShellPageModel;
             Assets = new ObservableCollection<Asset>((IEnumerable<Asset>)assetService.GetAssetItems(string.Empty));
+        }
+        public override void Init(object initData)
+        {
+            base.Init(initData);
+        }
+        protected override void ViewIsAppearing(object sender, EventArgs e)
+        {
+            
+        }
+        protected override void ViewIsDisappearing(object sender, EventArgs e)
+        {
+
         }
     }
 }

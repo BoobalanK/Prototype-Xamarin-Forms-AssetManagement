@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace AsssetManagement.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AppShell : Shell
+    public partial class AppShellPage : Shell
     {
-        public AppShell()
+        public AppShellPage()
         {
             InitializeComponent();
             RegisterRoutes();
