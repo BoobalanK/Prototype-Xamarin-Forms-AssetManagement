@@ -15,6 +15,8 @@ namespace AsssetManagement.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public AssetStatus Status { get; set; }
+        public bool IsRequested { get; set; }
+        public bool IsSearched { get; set; }
     }
     public enum AssetStatus
     {

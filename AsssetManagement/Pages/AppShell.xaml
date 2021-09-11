@@ -4,16 +4,16 @@
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:pages="clr-namespace:AsssetManagement.Pages"
-       xmlns:pagemodels="clr-namespace:AsssetManagement.PageModels"
+       xmlns:pagemodels="clr-namespace:AsssetManagement.ViewModels"
        mc:Ignorable="d"
        BackgroundColor="{StaticResource Material.Color.Primary}"
        ForegroundColor="White"
        TitleColor="White"
-       x:DataType="pagemodels:AppShellPageModel"
-       x:Class="AsssetManagement.Pages.AppShellPage"
+       x:DataType="pagemodels:AppShellViewModel"
+       x:Class="AsssetManagement.Pages.AppShell"
        Visual="Material">
    <Shell.BindingContext>
-      <pagemodels:AppShellPageModel />
+      <pagemodels:AppShellViewModel />
    </Shell.BindingContext>
    <Shell.FlyoutHeaderTemplate>
       <DataTemplate>
@@ -52,8 +52,7 @@
 
    <FlyoutItem Route="Login"
                FlyoutDisplayOptions="AsSingleItem"
-               Shell.FlyoutItemIsVisible="False"
-               IsVisible="True">
+               Shell.FlyoutItemIsVisible="False">
       <ShellContent  FlyoutItem.IsVisible="True"
                      Shell.NavBarIsVisible="False"
                      Shell.FlyoutBehavior="Disabled"
@@ -61,8 +60,7 @@
    </FlyoutItem>
 
    <FlyoutItem Route="Home"
-               FlyoutDisplayOptions="AsMultipleItems"
-               IsVisible="True">
+               FlyoutDisplayOptions="AsMultipleItems">
       <ShellContent Route="AssetsPage"
                     Icon="assets"
                     Title="Home"
@@ -74,25 +72,25 @@
    <ShellContent Icon="assets"
                  Title="Add Asset"
                  ContentTemplate="{DataTemplate pages:NewAssetPage}"
-                 IsVisible="{Binding IsStoreManager}">
+                 IsVisible="{Binding IsStoreManager,Mode=TwoWay}">
    </ShellContent>
 
    <ShellContent Icon="assets"
                  Title="Assign Asset"
                  ContentTemplate="{DataTemplate pages:AssignAssetPage}"
-                 IsVisible="{Binding IsStoreManager}">
+                 IsVisible="{Binding IsStoreManager,Mode=TwoWay}">
    </ShellContent>
 
    <ShellContent Icon="assets"
                  Title="Request Asset"
-                 ContentTemplate="{DataTemplate pages:RequestAssetPage}" 
-                 IsVisible="{Binding IsEmployee}">
+                 ContentTemplate="{DataTemplate pages:RequestAssetPage}"
+                 IsVisible="{Binding IsEmployee,Mode=TwoWay}">
    </ShellContent>
 
    <ShellContent Icon="assets"
                  Title="Release Asset"
                  ContentTemplate="{DataTemplate pages:ReleaseAssetPage}"
-                 IsVisible="{Binding IsEmployee}">
+                 IsVisible="{Binding IsEmployee,Mode=TwoWay}">
    </ShellContent>
 
    <MenuItem Text="Logout"

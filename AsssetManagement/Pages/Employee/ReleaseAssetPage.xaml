@@ -1,12 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:AsssetManagement.Models"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:viewmodels="clr-namespace:AsssetManagement.ViewModels"
+             xmlns:converters="clr-namespace:AsssetManagement.Converters"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             material:MaterialNavigationPage.AppBarColor="{StaticResource Material.Color.Primary}"
+             material:MaterialNavigationPage.AppBarTitleTextFontFamily="Roboto"
+             material:MaterialNavigationPage.AppBarTitleTextFontSize="14"
+             material:MaterialNavigationPage.StatusBarColor="{StaticResource Material.Color.Primary}"
+             material:MaterialNavigationPage.AppBarTitleTextAlignment="Start"
+             x:Name="releaseAssetsPage"
              x:Class="AsssetManagement.Pages.ReleaseAssetPage">
+   <ContentPage.BindingContext>
+      <viewmodels:ReleaseAssetViewModel />
+   </ContentPage.BindingContext>
+   <ContentPage.Behaviors>
+      <xct:EventToCommandBehavior EventName="Appearing"
+                                  Command="{Binding OnAppearingCommand}" />
+      <xct:EventToCommandBehavior EventName="Disappearing"
+                                  Command="{Binding OnDisappearingCommand}" />
+   </ContentPage.Behaviors>
+   <ContentPage.Resources>
+      <converters:EnumToColorConverter x:Key="EnumToColorConverter" />
+   </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+         <StackLayout BindableLayout.EmptyView="No assets to release" BindableLayout.ItemsSource="{Binding Assets}">
+            <BindableLayout.ItemTemplate>
+               <DataTemplate>
+                     <material:MaterialCard  Elevation="4"
+                                             IsClickable="True"
+                                             CornerRadius="2"
+                                             Margin="5">
+                        <Grid ColumnDefinitions="*,auto">
+                           <Grid RowDefinitions="auto,auto,*"
+                                 Grid.Column="0">
+                              <Label Grid.Row="0"
+                                     Text="{Binding Name}"
+                                     FontAttributes="Bold" />
+                              <Label Grid.Row="1"
+                                     Text="{Binding Type}" />
+                              <Label Grid.Row="2"
+                                     Text="{Binding Project}" />
+                           </Grid>
+
+                           <Grid Grid.Column="1">
+                              <Grid RowDefinitions="auto,auto">
+                                 <BoxView CornerRadius="25"
+                                          VerticalOptions="CenterAndExpand"
+                                          HorizontalOptions="CenterAndExpand"
+                                          BackgroundColor="{Binding Status,Converter={StaticResource EnumToColorConverter}}"
+                                          WidthRequest="75" />
+                                 <Label Text="{Binding Status}"
+                                        FontSize="Small"
+                                        FontAttributes="Bold"
+                                        VerticalOptions="CenterAndExpand"
+                                        HorizontalOptions="CenterAndExpand"
+                                        TextColor="{StaticResource Material.Color.OnSecondary}" />
+                              </Grid>
+                              <material:MaterialButton Grid.Row="1"
+                                                       Text="Release"
+                                                       CornerRadius="25"
+                                                       FontSize="Small"
+                                                       ButtonType="Elevated"
+                                                       AllCaps="False"
+                                                    Command="{Binding Path=BindingContext.OnReleaseClicked ,Source={x:Reference releaseAssetsPage}}"
+                                                       CommandParameter="{Binding .}" />
+                           </Grid>
+                        </Grid>
+                     </material:MaterialCard>
+               </DataTemplate>
+            </BindableLayout.ItemTemplate>
+         </StackLayout>
+   </ContentPage.Content>
 </ContentPage>

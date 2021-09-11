@@ -4,6 +4,8 @@ using AsssetManagement.StaticClasses;
 
 using FreshMvvm;
 
+using MvvmHelpers;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,9 +13,9 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
-namespace AsssetManagement.PageModels
+namespace AsssetManagement.ViewModels
 {
-    public class LoginPageModel : FreshBasePageModel
+    public class LoginViewModel : BaseViewModel
     {
         private User _user;
 
@@ -25,17 +27,14 @@ namespace AsssetManagement.PageModels
                 if (_user != value)
                 {
                     _user = value;
-                    RaisePropertyChanged(nameof(User));
+                    OnPropertyChanged(nameof(User));
                 }
             }
         }
 
-        private AppShellPageModel _appShellPageModel;
-
         public FreshAwaitCommand OnLoginCommand { get; }
-        public LoginPageModel(AppShellPageModel appShellPageModel)
+        public LoginViewModel()
         {
-            _appShellPageModel = appShellPageModel;
             OnLoginCommand = new FreshAwaitCommand(OnLogin);
             //
             User = new User();
@@ -51,8 +50,8 @@ namespace AsssetManagement.PageModels
         private void OnLogin(object arg1, TaskCompletionSource<bool> arg2)
         {
             AppData.User = User;
-            (Shell.Current.BindingContext as AppShellPageModel).IsEmployee = AppData.User.Type is Models.UserType.Employee;
-            (Shell.Current.BindingContext as AppShellPageModel).IsStoreManager = AppData.User.Type is Models.UserType.StoreManager;
+            (Shell.Current.BindingContext as AppShellViewModel).IsEmployee = AppData.User.Type is Models.UserType.Employee;
+            (Shell.Current.BindingContext as AppShellViewModel).IsStoreManager = AppData.User.Type is Models.UserType.StoreManager;
             Shell.Current.GoToAsync("//Home");
         }
     }

@@ -1,4 +1,4 @@
-﻿using AsssetManagement.PageModels;
+﻿using AsssetManagement.ViewModels;
 using AsssetManagement.Pages;
 using AsssetManagement.Repositories;
 using AsssetManagement.Services;
@@ -18,22 +18,24 @@ namespace AsssetManagement
         {
             XF.Material.Forms.Material.Init(this);
             InitializeComponent();
-            XF.Material.Forms.Material.Use("Material.Style");
             InitContainer();
-            MainPage = new AppShellPage();
+            XF.Material.Forms.Material.Use("Material.Style");
+            MainPage = new AppShell();
         }
 
         private void InitContainer()
         {
-            FreshIOC.Container.Register<AppShellPageModel, AppShellPageModel>();
-            FreshIOC.Container.Register<LoginPageModel,LoginPageModel>();
-            FreshIOC.Container.Register<AssetsPageModel,AssetsPageModel>();
+            DependencyService.Register<IAssetRepository, AssetRepository>();
+            DependencyService.Register<IUserRepository, UserRepository>();
             //
-            FreshIOC.Container.Register<IUserRepository,UserRepository>();
-            FreshIOC.Container.Register<IAssetRepository, AssetRepository>();
+            DependencyService.Register<IAssetService, AssetService>();
+            DependencyService.Register<IUserService, UserService>();
             //
-            FreshIOC.Container.Register<IUserService, UserService>();
-            FreshIOC.Container.Register<IAssetService, AssetService>();
+            DependencyService.Register<AppShellViewModel>();
+            DependencyService.Register<LoginViewModel>();
+            DependencyService.Register<AssetsViewModel>();
+            DependencyService.Register<ReleaseAssetViewModel>();
+            DependencyService.Register<RequestAssetViewModel>();
         }
 
         protected override void OnStart()

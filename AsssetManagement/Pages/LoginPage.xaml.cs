@@ -1,4 +1,4 @@
-﻿using AsssetManagement.PageModels;
+﻿using AsssetManagement.ViewModels;
 
 using FreshMvvm;
 
@@ -19,7 +19,7 @@ namespace AsssetManagement.Pages
         public LoginPage()
         {
             InitializeComponent();
-            BindingContext = FreshIOC.Container.Resolve<LoginPageModel>();
+            BindingContext = FreshIOC.Container.Resolve<LoginViewModel>();
         }
     }
 }

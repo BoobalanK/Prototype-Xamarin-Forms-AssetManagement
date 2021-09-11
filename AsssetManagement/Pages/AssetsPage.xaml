@@ -2,18 +2,57 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-             xmlns:pagemodels="clr-namespace:AsssetManagement.PageModels"
+             xmlns:viewmodels="clr-namespace:AsssetManagement.ViewModels"
              xmlns:models="clr-namespace:AsssetManagement.Models"
-             x:DataType="pagemodels:AssetsPageModel"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:converters="clr-namespace:AsssetManagement.Converters"
+             material:MaterialNavigationPage.AppBarColor="{StaticResource Material.Color.Primary}"
+             material:MaterialNavigationPage.AppBarTitleTextFontFamily="Roboto"
+             material:MaterialNavigationPage.AppBarTitleTextFontSize="14"
+             material:MaterialNavigationPage.StatusBarColor="{StaticResource Material.Color.Primary}"
+             material:MaterialNavigationPage.AppBarTitleTextAlignment="Start"
+             x:Name="assetsPage"
              x:Class="AsssetManagement.Pages.AssetsPage">
-    <ContentPage.Content>
-      <ListView ItemsSource="{Binding Assets}" SeparatorVisibility="None" HasUnevenRows="True" RowHeight="200">
+   <ContentPage.BindingContext>
+      <viewmodels:AssetsViewModel />
+   </ContentPage.BindingContext>
+   <Shell.SearchHandler>
+      <viewmodels:AppSearchHandler Placeholder="Enter an asset to begin search"
+                                   ShowsResults="False"
+                                   Keyboard="Plain">
+         <viewmodels:AppSearchHandler.ItemTemplate>
+            <DataTemplate x:DataType="models:Asset">
+               <Grid Padding="10"
+                     BackgroundColor="{StaticResource Material.Color.OnSecondary}">
+                  <Label Text="{Binding Name}"
+                         FontAttributes="Bold"
+                         HorizontalOptions="StartAndExpand"
+                         VerticalOptions="Center" />
+               </Grid>
+            </DataTemplate>
+         </viewmodels:AppSearchHandler.ItemTemplate>
+      </viewmodels:AppSearchHandler>
+   </Shell.SearchHandler>
+   <ContentPage.Behaviors>
+      <xct:EventToCommandBehavior EventName="Appearing"
+                                  Command="{Binding OnAppearingCommand}" />
+      <xct:EventToCommandBehavior EventName="Disappearing"
+                                  Command="{Binding OnDisappearingCommand}" />
+   </ContentPage.Behaviors>
+   <ContentPage.Resources>
+      <converters:EnumToColorConverter x:Key="EnumToColorConverter" />
+   </ContentPage.Resources>
+   <ContentPage.Content>
+      <ListView ItemsSource="{Binding Assets}"
+                SeparatorVisibility="None"
+                HasUnevenRows="True"
+                RowHeight="200">
          <ListView.ItemTemplate>
             <DataTemplate>
-               <ViewCell x:DataType="models:Asset">
+               <ViewCell>
                   <material:MaterialCard Elevation="4"
                                          IsClickable="True"
-                                         CornerRadius="2" 
+                                         CornerRadius="2"
                                          Margin="5">
                      <Grid ColumnDefinitions="*,auto">
                         <Grid RowDefinitions="auto,auto,*"
@@ -26,17 +65,19 @@
                            <Label Grid.Row="2"
                                   Text="{Binding Project}" />
                         </Grid>
-                        
+
                         <Grid Grid.Column="1">
-                        <BoxView CornerRadius="25"
-                                 VerticalOptions="CenterAndExpand"
-                                 HorizontalOptions="CenterAndExpand"
-                                 BackgroundColor="Green" WidthRequest="75" />
+                           <BoxView CornerRadius="25"
+                                    VerticalOptions="CenterAndExpand"
+                                    HorizontalOptions="CenterAndExpand"
+                                    BackgroundColor="{Binding Status,Converter={StaticResource EnumToColorConverter}}"
+                                    WidthRequest="75" />
                            <Label Text="{Binding Status}"
+                                  FontSize="Small"
                                   FontAttributes="Bold"
                                   VerticalOptions="CenterAndExpand"
-                               HorizontalOptions="CenterAndExpand"
-                               TextColor="{StaticResource Material.Color.OnSecondary}" />
+                                  HorizontalOptions="CenterAndExpand"
+                                  TextColor="{StaticResource Material.Color.OnSecondary}" />
                         </Grid>
                      </Grid>
                   </material:MaterialCard>
@@ -44,5 +85,5 @@
             </DataTemplate>
          </ListView.ItemTemplate>
       </ListView>
-    </ContentPage.Content>
+   </ContentPage.Content>
 </ContentPage>

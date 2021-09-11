@@ -1,6 +1,9 @@
-﻿using AsssetManagement.StaticClasses;
+﻿using AsssetManagement.Pages;
+using AsssetManagement.StaticClasses;
 
 using FreshMvvm;
+
+using MvvmHelpers;
 
 using System;
 using System.Collections.Generic;
@@ -8,9 +11,9 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace AsssetManagement.PageModels
+namespace AsssetManagement.ViewModels
 {
-    public class AppShellPageModel : FreshBasePageModel
+    public class AppShellViewModel : BaseViewModel
     {
         private bool _isEmployee;
         private bool _isStoreManager;
@@ -22,7 +25,7 @@ namespace AsssetManagement.PageModels
             {
                 if (_isEmployee != value)
                 {
-                    RaisePropertyChanged(nameof(IsEmployee));
+                    OnPropertyChanged(nameof(IsEmployee));
                 }
                 _isEmployee = value;
             }
@@ -34,16 +37,16 @@ namespace AsssetManagement.PageModels
             {
                 if (_isStoreManager != value)
                 {
-                    RaisePropertyChanged(nameof(IsStoreManager));
+                    OnPropertyChanged(nameof(IsStoreManager));
                 }
                 _isStoreManager = value;
             }
         }
 
-        public AppShellPageModel()
+        public AppShellViewModel()
         {
-            IsEmployee = true;
-            IsStoreManager= true;
+            IsEmployee = false;
+            IsStoreManager= false;
         }
 
         public void UpdateShellContent()
@@ -54,6 +57,8 @@ namespace AsssetManagement.PageModels
                 {
                     IsEmployee = AppData.User.Type is Models.UserType.Employee;
                     IsStoreManager = AppData.User.Type is Models.UserType.StoreManager;
+                    (Shell.Current as AppShell).BindingContext = null;
+                    (Shell.Current as AppShell).BindingContext = this;
                 }
             });
         }

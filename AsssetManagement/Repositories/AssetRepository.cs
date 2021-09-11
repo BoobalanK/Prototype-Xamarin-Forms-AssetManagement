@@ -1,4 +1,5 @@
 ﻿using AsssetManagement.Models;
+using AsssetManagement.Repositories;
 using AsssetManagement.StaticClasses;
 
 using Couchbase.Lite;
@@ -14,11 +15,12 @@ using System.Text;
 
 using Xamarin.Forms;
 
+[assembly: Dependency(typeof(AssetRepository))]
 namespace AsssetManagement.Repositories
 {
     public interface IAssetRepository : IRepository<Asset, string>
     {
-        new IList<Asset> GetAll(string searchText);
+        new IEnumerable<Asset> GetAll(string searchText);
         new Asset Get(string assetId);
         new bool Save(Asset asset);
         new bool Update(Asset asset);
@@ -97,7 +99,7 @@ namespace AsssetManagement.Repositories
         {
             try
             {
-                if (asset != null)
+                if (asset != null && Get(asset.Id.ToString()) != null)
                 {
                     // tag::docSet[]
                     var mutableDocument = new MutableDocument(asset.Id.ToString());
@@ -143,9 +145,10 @@ namespace AsssetManagement.Repositories
             return false;
         }
 
-        public override IList<Asset> GetAll(string searchText)
+        public override IEnumerable<Asset> GetAll(string searchText)
         {
-            var assets = new List<Asset>();
+            List<Asset> assets = new List<Asset>();
+            Asset asset = new Asset();
             try
             {
                 if (string.IsNullOrEmpty(searchText))
@@ -154,7 +157,7 @@ namespace AsssetManagement.Repositories
                     foreach (var result in fromQuery.Execute())
                     {
                         var documentId = result.ToDictionary().Values.FirstOrDefault().ToString();
-                        Asset asset = Get(documentId);
+                        asset = Get(documentId);
                         assets.Add(asset);
                     }
                 }
@@ -168,20 +171,20 @@ namespace AsssetManagement.Repositories
                         foreach (var result in whereQuery.Execute())
                         {
                             var documentId = result.ToDictionary().Values.FirstOrDefault().ToString();
-                            Asset asset = Get(documentId);
+                            asset = Get(documentId);
                             assets.Add(asset);
                         }
                     }
                 }
-                //
-                return assets;
+                assets = assets.Where(x => !x.IsRequested && !x.IsSearched).ToList();
+                return assets.AsEnumerable();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"UserProfileRepository Exception: {ex.Message}");
             }
 
-            return assets;
+            return assets.AsEnumerable();
         }
 
         public override bool Update(Asset asset)

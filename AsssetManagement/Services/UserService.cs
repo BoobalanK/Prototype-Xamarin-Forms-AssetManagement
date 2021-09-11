@@ -1,10 +1,14 @@
 ﻿using AsssetManagement.Models;
 using AsssetManagement.Repositories;
+using AsssetManagement.Services;
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(UserService))]
 namespace AsssetManagement.Services
 {
     public interface IUserService

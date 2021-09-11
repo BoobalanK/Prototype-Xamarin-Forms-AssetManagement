@@ -1,4 +1,6 @@
 ﻿using AsssetManagement.Models;
+using AsssetManagement.Repositories;
+using AsssetManagement.Services;
 using AsssetManagement.StaticClasses;
 
 using Couchbase.Lite;
@@ -10,11 +12,13 @@ using System.Text;
 
 using Xamarin.Forms;
 
+[assembly: Dependency(typeof(UserRepository))]
+
 namespace AsssetManagement.Repositories
 {
     public interface IUserRepository : IRepository<User, string>
     {
-        new IList<User> GetAll(string searchText);
+        new IEnumerable<User> GetAll(string searchText);
         new User Get(string userId);
         new bool Update(User user);
         new bool Save(User user);
@@ -124,7 +128,7 @@ namespace AsssetManagement.Repositories
             return false;
         }
 
-        public override IList<User> GetAll(string searchText)
+        public override IEnumerable<User> GetAll(string searchText)
         {
             var users = new List<User>();
             try

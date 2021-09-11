@@ -7,7 +7,6 @@
              x:Class="AsssetManagement.App">
     <Application.Resources>
 
-     
       <OnPlatform x:Key="FontFamily.RobotoRegular"
                   x:TypeArguments="x:String"
                   Android="Fonts/Roboto-Regular.ttf#Roboto-Regular"
@@ -41,8 +40,8 @@
                                        OnSecondary="#FFFFFF"
                                        OnSurface="#000000"
                                        Primary="#1565c0"
-                                       PrimaryVariant="#002171"
-                                       Secondary="#BFEDFF"
+                                       PrimaryVariant="#BFEDFF"
+                                       Secondary="#002171"
                                        SecondaryVariant="#91c0ff"
                                        Surface="#F5F5F5" />
 
@@ -50,46 +49,14 @@
                                   ColorConfiguration="{StaticResource Material.Color}"
                                   FontConfiguration="{StaticResource Material.Font}" />
 
-      <!--<Style TargetType="ContentPage">
-         <Setter Property="BackgroundColor"
-                 Value="{StaticResource Material.Color.Surface}" />
-      </Style>-->
-       
-      <!--<Style TargetType="ListView">
-         <Setter Property="BackgroundColor"
-                 Value="{StaticResource Material.Color.Surface}" />
-      </Style>-->
-
-      <Style TargetType="material:MaterialTextField">
-         <Setter Property="BackgroundColor"
-                 Value="{StaticResource Material.Color.Secondary}" />
-         <Setter Property="PlaceholderColor"
-                 Value="{StaticResource Material.Color.SecondaryVariant}" />
-         <Setter Property="TextColor"
-                 Value="{StaticResource Material.Color.OnBackground}" />
-         <Setter Property="UnderlineColor"
-                 Value="{StaticResource Material.Color.Secondary}" />
-      </Style>
 
       <Style TargetType="material:MaterialButton">
-         <Setter Property="BackgroundColor"
-                 Value="{StaticResource Material.Color.Primary}" />
-         <Setter Property="TextColor"
-                 Value="{StaticResource Material.Color.OnSurface}" />
-         <Setter Property="BorderColor"
-                 Value="{StaticResource Material.Color.Surface}" />
          <Setter Property="AllCaps"
                  Value="False" />
          <Setter Property="HorizontalOptions"
                  Value="FillAndExpand" />
          <Setter Property="VerticalOptions"
                  Value="CenterAndExpand" />
-      </Style>
-      <Style TargetType="material:MaterialCard">
-         <Setter Property="BackgroundColor"
-                 Value="{StaticResource Material.Color.OnSecondary}" />
-         <Setter Property="BorderColor"
-                 Value="{StaticResource Material.Color.Surface}" />
       </Style>
 
    </Application.Resources>

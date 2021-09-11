@@ -1,4 +1,4 @@
-﻿using AsssetManagement.PageModels;
+﻿using AsssetManagement.ViewModels;
 using FreshMvvm;
 
 using System;
@@ -18,7 +18,7 @@ namespace AsssetManagement.Pages
         public AssetsPage()
         {
             InitializeComponent();
-            BindingContext = FreshIOC.Container.Resolve<AssetsPageModel>();
+            BindingContext = FreshIOC.Container.Resolve<AssetsViewModel>();
         }
     }
 }

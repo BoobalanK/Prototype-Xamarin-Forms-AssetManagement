@@ -4,7 +4,7 @@
              x:Class="AsssetManagement.Pages.EditAssetPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+         <Label Text="Welcome to Edit Asset Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
